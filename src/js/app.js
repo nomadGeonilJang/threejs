@@ -23,7 +23,8 @@ const scene = new THREE.Scene();
 
 const AmbientLightColor = 0xfffffffff;
 const AmbientLightIntensity = 1;
-const light = new THREE.AmbientLight(AmbientLightColor,AmbientLightIntensity);
+const light = new THREE.HemisphereLight(0xffff80,0x4040ff,1);
+// const light = new THREE.AmbientLight(AmbientLightColor,AmbientLightIntensity);
 // const light = new THREE.DirectionalLight(0xffffff, 1.0);
 // light.position.set(20,100,10);
 // light.target.position.set(0,0,0);
@@ -44,8 +45,10 @@ scene.add(plane);
 const stats = new Stats();
 document.body.appendChild(stats.dom);
 
+
+
 const box = new THREE.Mesh(
-  new THREE.BoxGeometry(2,2,2),
+  new THREE.SphereGeometry(32,32,32),
   new THREE.MeshStandardMaterial({
     color:0xffffff
   })
@@ -55,6 +58,7 @@ box.position.set(0,5,0);
 box.castShadow = true;
 box.receiveShadow = true;
 scene.add(box);
+
 
 const animate = function(){
   requestAnimationFrame(animate);
