@@ -48,7 +48,7 @@ document.body.appendChild(stats.dom);
 
 
 const box = new THREE.Mesh(
-  new THREE.SphereGeometry(5,32,32),
+  new THREE.SphereGeometry(32,32,32),
   new THREE.MeshStandardMaterial({
     color:0xffffff
   })
