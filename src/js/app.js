@@ -45,8 +45,10 @@ scene.add(plane);
 const stats = new Stats();
 document.body.appendChild(stats.dom);
 
+
+
 const box = new THREE.Mesh(
-  new THREE.BoxGeometry(2,2,2),
+  new THREE.SphereGeometry(5,32,32),
   new THREE.MeshStandardMaterial({
     color:0xffffff
   })
@@ -56,6 +58,7 @@ box.position.set(0,5,0);
 box.castShadow = true;
 box.receiveShadow = true;
 scene.add(box);
+
 
 const animate = function(){
   requestAnimationFrame(animate);
