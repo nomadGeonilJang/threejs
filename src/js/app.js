@@ -1,47 +1,55 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 
 
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const fov = 60; //fielder view
+const aspect = 1920 / 1080;
+const near = 1;
+const far = 1000;
+
+const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+camera.position.set(75,20,0);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
-
-const light = new THREE.AmbientLight(0x404040);
+const light = new THREE.DirectionalLight(0xffffff, 1.0);
+light.position.set(20,100,10);
+light.target.position.set(0,0,0);
+light.castShadow = true;
 scene.add(light);
 
-new OrbitControls( camera, renderer.domElement );
-const mtlLoader = new MTLLoader();
-mtlLoader.setPath("/assets/");
-mtlLoader.load('r2-d2.mtl',(mt)=>{
-  mt.preload();
-  const objLoader = new OBJLoader();
-  objLoader.setMaterials(mt);
-  objLoader.setPath("/assets/");
-  objLoader.load("r2-d2.obj",(obj)=>{
-    scene.add(obj);
-    obj.position.y -= 60;
-  });
-});
+const controls = new OrbitControls(camera, renderer.domElement);
 
-// const geometry = new THREE.BoxGeometry();
-// const material = new THREE.MeshBasicMaterial( 
-//   { color: 0xffff00, wireframe:true } 
-// );
-// const cube = new THREE.Mesh( geometry, material );
-// scene.add( cube );
+const geometry = new THREE.PlaneGeometry(100,100,10,10);
+const material = new THREE.MeshStandardMaterial({color:0xffffff});
 
-camera.position.z = 5;
+const plane = new THREE.Mesh(geometry, material);
+plane.castShadow = true;
+plane.receiveShadow = true;
+plane.rotation.x = -Math.PI / 2;
+scene.add(plane);
 
-function animate() {
-  requestAnimationFrame( animate );
-  //   cube.rotation.x += 0.01;
-  //   cube.rotation.y += 0.01;
-  renderer.render( scene, camera );
-}
+const box = new THREE.Mesh(
+  new THREE.BoxGeometry(2,2,2),
+  new THREE.MeshStandardMaterial({
+    color:0xffffff
+  })
+);
+
+box.position.set(0,5,0);
+box.castShadow = true;
+box.receiveShadow = true;
+scene.add(box);
+
+const animate = function(){
+  requestAnimationFrame(animate);
+  renderer.render(scene,camera);
+};
 animate();
