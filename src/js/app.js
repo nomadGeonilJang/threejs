@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import Stats from "three/examples/jsm/libs/stats.module";
 
 
 const renderer = new THREE.WebGLRenderer({antialias:true});
@@ -36,6 +37,9 @@ plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 scene.add(plane);
 
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+
 const box = new THREE.Mesh(
   new THREE.BoxGeometry(2,2,2),
   new THREE.MeshStandardMaterial({
@@ -50,6 +54,7 @@ scene.add(box);
 
 const animate = function(){
   requestAnimationFrame(animate);
+  stats.update();
   renderer.render(scene,camera);
 };
 animate();
