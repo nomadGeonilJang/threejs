@@ -20,10 +20,14 @@ camera.position.set(75,20,0);
 
 const scene = new THREE.Scene();
 
-const light = new THREE.DirectionalLight(0xffffff, 1.0);
-light.position.set(20,100,10);
-light.target.position.set(0,0,0);
-light.castShadow = true;
+
+const AmbientLightColor = 0xfffffffff;
+const AmbientLightIntensity = 1;
+const light = new THREE.AmbientLight(AmbientLightColor,AmbientLightIntensity);
+// const light = new THREE.DirectionalLight(0xffffff, 1.0);
+// light.position.set(20,100,10);
+// light.target.position.set(0,0,0);
+// light.castShadow = true;
 scene.add(light);
 
 const controls = new OrbitControls(camera, renderer.domElement);
