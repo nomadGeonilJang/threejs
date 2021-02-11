@@ -6,6 +6,7 @@ import {GUI} from "three/examples/jsm/libs/dat.gui.module";
 let renderer;
 let scene;
 let camera;
+let stats; 
 
 
 const init = () =>{
@@ -73,23 +74,29 @@ const init = () =>{
   controls.target.copy(mshStdBox.position);
   controls.update();
 
+  stats = new Stats();
+  document.body.appendChild(stats.dom);
 
   const gui = new GUI({width:300});
   gui.open();
 
+  let param = {
+    motion:true,
+    light:true
+  };
+
+  gui.add(param,'motion');
+  gui.add(param,'light');
+
+};
 
 
 
-
-
+const animate = function(){
+  requestAnimationFrame(animate);
+  renderer.render(scene,camera);
+  stats.update();
 };
 
 init();
-const stats = new Stats();
-document.body.appendChild(stats.dom);
-const animate = function(){
-  requestAnimationFrame(animate);
-  stats.update();
-  renderer.render(scene,camera);
-};
 animate();
