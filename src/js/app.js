@@ -43,7 +43,7 @@ const init = () =>{
   scene.add(mshStdFloor);
 
   const matStdObjects = new THREE.MeshStandardMaterial({
-    color:0xffffff,
+    color:0xafffff,
     roughness:0,
     metalness:0,
   });
@@ -83,7 +83,8 @@ const init = () =>{
   let param = {
     motion:true,
     light:true,
-    ambient:ambient.intensity
+    ambient:ambient.intensity,
+    'material color':matStdObjects.color.getHex()
   };
 
   gui.add(param,'motion');
@@ -95,8 +96,14 @@ const init = () =>{
     .step(0.01)
     .onChange((val)=>{
       ambient.intensity = val;
+
     });
 
+  lightFolder
+    .addColor(param,"material color")
+    .onChange(val => {
+      matStdObjects.color.setHex(val);
+    });
   lightFolder.open();
 
 };
