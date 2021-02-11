@@ -10,3 +10,8 @@
 npm i
 npm run dev
 ```
+
+
+## 쉬운 개발환경 설정하기
+1. [threejs.org](https://threejs.org)를 간다.
+2. 다운로드 한다. -> build/three.js or three.min.js를 사용합니다.
