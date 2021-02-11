@@ -26,7 +26,7 @@ const init = () =>{
   );
   camera.position.set(0,200,335);
   scene = new THREE.Scene();
-  const ambient = new THREE.AmbientLight(0x00ff00, 0.1);
+  const ambient = new THREE.AmbientLight(0xffdd00, 0.1);
   scene.add(ambient);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff,0.1);
@@ -82,7 +82,8 @@ const init = () =>{
 
   let param = {
     motion:true,
-    light:true
+    light:true,
+    ambient:ambient.intensity
   };
 
   gui.add(param,'motion');
@@ -90,10 +91,13 @@ const init = () =>{
 
   const lightFolder = gui.addFolder('light');
   lightFolder
-    .add(param,'light')
+    .add(param,'ambient', 0.0, 1)
+    .step(0.01)
     .onChange((val)=>{
       ambient.intensity = val;
     });
+
+  lightFolder.open();
 
 };
 
