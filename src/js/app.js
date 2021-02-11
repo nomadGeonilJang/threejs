@@ -88,6 +88,13 @@ const init = () =>{
   gui.add(param,'motion');
   gui.add(param,'light');
 
+  const lightFolder = gui.addFolder('light');
+  lightFolder
+    .add(param,'light')
+    .onChange((val)=>{
+      ambient.intensity = val;
+    });
+
 };
 
 
